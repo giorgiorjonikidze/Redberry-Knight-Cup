@@ -5,11 +5,10 @@ import ErrorCard from "./errorCard";
 
 const ErrorsList = ({ PropsErrors, counter }) => {
   const [errorsArray, setErrorsArray] = useState([]);
-  const [errors, setErrors] = useState(PropsErrors);
 
   useEffect(() => {
     const filteredObj = Object.fromEntries(
-      Object.entries(errors).filter(([key, value]) => {
+      Object.entries(PropsErrors).filter(([key, value]) => {
         if (typeof value === "object" && !Array.isArray(value)) {
           return Object.keys(value).length !== 0;
         }
@@ -21,7 +20,7 @@ const ErrorsList = ({ PropsErrors, counter }) => {
       return obj[1].message;
     });
     setErrorsArray(mappedObj);
-  }, [PropsErrors, errors, counter]);
+  }, [PropsErrors, counter]);
 
   const closeErrorHandler = (item) => {
     const newArray = errorsArray.filter((err) => err !== item);
@@ -29,7 +28,7 @@ const ErrorsList = ({ PropsErrors, counter }) => {
   };
 
   return (
-    <div className="absolute top-[226px] right-[-39px] z-50">
+    <div className="absolute top-[126px] left-[1539px] z-50">
       {errorsArray.map((item) => {
         return (
           <ErrorCard

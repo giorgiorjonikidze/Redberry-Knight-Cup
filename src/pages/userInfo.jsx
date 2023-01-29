@@ -5,7 +5,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
 import ErrorsList from "../components/errorList";
-import { useEffect } from "react";
 import { useState } from "react";
 
 const UserInfo = () => {
@@ -21,12 +20,10 @@ const UserInfo = () => {
   } = useForm();
 
   const onSubmit = () => {
-    console.log("form submited");
     navigate("/experience");
   };
 
   const onError = () => {
-    console.log("onError on CLick", errors);
     setCounter((prevCounter) => prevCounter + 1);
   };
 

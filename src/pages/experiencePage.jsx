@@ -95,7 +95,6 @@ const ExperiencePage = () => {
           return "professional";
         }
       };
-      console.log("form sumbited", userData);
       axios
         .post(postUrl, {
           name: userData.name,
@@ -121,7 +120,6 @@ const ExperiencePage = () => {
     }
     const errs = validation();
     setFormErrors(errs);
-    console.log(formHookData);
   };
   const onError = (data) => {
     const errs = validation();
@@ -131,8 +129,6 @@ const ExperiencePage = () => {
     };
 
     setFormErrors(errs);
-
-    console.log(errs, data);
     setCounter((prevCounter) => prevCounter + 1);
   };
 

@@ -4,8 +4,6 @@ import XIcon from "../assets/images/x.svg";
 const ErrorCard = ({ message, onErrorClose }) => {
   const closeError = (message) => {
     onErrorClose(message);
-    console.log(message, "messages");
-    
   };
   return (
     <div className="w-[350px]  border-[1px] border-solid bg-white border-opacity-10 shadow-black opacity-15 mt-[20px] rounded-[8px]">

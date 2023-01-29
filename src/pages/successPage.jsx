@@ -7,7 +7,6 @@ import rocketSvg from "../assets/images/rocket.svg";
 const SuccessPage = () => {
     return (
         <div className="flex relative">
-
       <section className="inline-block relative">
         <div className="h-[84px] bg-[#7025FB]  w-[923px]">
           <img
