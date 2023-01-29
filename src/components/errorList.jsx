@@ -7,12 +7,21 @@ const ErrorsList = ({ errors }) => {
   const [errorsArray, setErrorsArray] = useState([]);
 
   useEffect(() => {
-    const mappedObj = Object.entries(errors).map((obj) => {
-      return obj[1].message
+    const filteredObj = Object.fromEntries(
+      Object.entries(errors).filter(([key, value]) => {
+        if (typeof value === "object" && !Array.isArray(value)) {
+          return Object.keys(value).length !== 0;
+        }
+        return value !== "";
+      })
+    );
+    console.log(filteredObj, "erorebi garet");
+
+    const mappedObj = Object.entries(filteredObj).map((obj) => {
+      return obj[1].message;
     });
     setErrorsArray(mappedObj);
   }, [errors]);
-  
 
   const closeErrorHandler = (item) => {
     const newArray = errorsArray.filter((err) => err !== item);
