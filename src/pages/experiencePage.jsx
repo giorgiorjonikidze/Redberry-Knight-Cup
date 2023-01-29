@@ -5,7 +5,8 @@ import axios from "axios";
 import logo from "../assets/images/logo.svg";
 import mainImage from "../assets/images/unsplash_27LH_0jXKYI (1).png";
 import btnVector from "../assets/images/VectorButton.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 import { useForm } from "react-hook-form";
 import ErrorsList from "../components/errorList";
 
@@ -13,6 +14,7 @@ const ExperiencePage = () => {
   const [fetchedCharacters, setFetchedCharacters] = useState([]);
   const [knowledge, setKnowledge] = useState("");
   const [selectedCharacter, setSelectedCharacter] = useState("");
+  const [counter, setCounter] = useState(0);
 
   const [formErrors, setFormErrors] = useState([]);
 
@@ -26,7 +28,7 @@ const ExperiencePage = () => {
 
   const grandmastersUrl =
     "https://chess-tournament-api.devtest.ge/api/grandmasters";
-  const postUrl = "https://chess-tournament-api.devtest.ge/api";
+  const postUrl = "https://chess-tournament-api.devtest.ge/api/register";
 
   useEffect(() => {
     axios(grandmastersUrl)
@@ -53,44 +55,91 @@ const ExperiencePage = () => {
   const validation = () => {
     const errorss = {};
     if (knowledge === "") {
-      errorss.knowledge = {message: "Please enter your level of knowledge", error: true};
+      errorss.knowledge = {
+        message: "Please enter your level of knowledge",
+        error: true,
+      };
     } else {
       errorss.knowledge = {};
     }
     if (selectedCharacter === "") {
-      errorss.selectedCharacter = {message: "Please choose your character", error: true};
+      errorss.selectedCharacter = {
+        message: "Please choose your character",
+        error: true,
+      };
     } else {
       errorss.selectedCharacter = {};
     }
     if (Object.keys(errors).length !== 0) {
-        errorss.radio = {message: "Pleace enter if you have participated", error: true};
+      errorss.radio = {
+        message: "Pleace enter if you have participated",
+        error: true,
+      };
     } else {
-        errorss.radio = {};
+      errorss.radio = {};
     }
     return errorss;
   };
 
   const onSubit = (formHookData) => {
-    // if (knowledge !== "" && selectedCharacter !== "") {
-    //   console.log("form sumbited");
-    // }
+    const userData = JSON.parse(localStorage.getItem("userInfo"));
+    if (knowledge !== "" && selectedCharacter !== "") {
+      const knowledgeConverter = () => {
+        if (knowledge === "Beginner") {
+          return "beginner";
+        }
+        if (knowledge === "Intermediate") {
+          return "normal";
+        }
+        if (knowledge === "Professional") {
+          return "professional";
+        }
+      };
+      console.log("form sumbited", userData);
+      axios
+        .post(postUrl, {
+          name: userData.name,
+          email: userData.email,
+          phone: userData.phone,
+          experience_level: knowledgeConverter(),
+          already_participated: Boolean(formHookData.radio),
+          character_id: selectedCharacter,
+          date_of_birth: String(userData.data),
+        })
+        .then((response) => {
+          console.log(response.status);
+          if(response.status === 201){
+            NavigationPreloadManager("/success")
+            localStorage.clear();
+          }
+
+          
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
     const errs = validation();
     setFormErrors(errs);
-    console.log(errs);
+    console.log(formHookData);
   };
   const onError = (data) => {
     const errs = validation();
-    errs.radio = {message: "Pleace enter if you have participated", error: true};
+    errs.radio = {
+      message: "Pleace enter if you have participated",
+      error: true,
+    };
 
     setFormErrors(errs);
 
-    console.log(errs,data);
+    console.log(errs, data);
+    setCounter((prevCounter) => prevCounter + 1);
   };
 
   return (
     <div className="flex relative">
       {Object.keys(formErrors).length !== 0 && (
-        <ErrorsList errors={formErrors} />
+        <ErrorsList PropsErrors={formErrors} counter={counter} />
       )}
       <section className="inline-block relative">
         <div className="h-[84px] bg-[#7025FB]  w-[923px]">
@@ -170,12 +219,14 @@ const ExperiencePage = () => {
               <div className="flex gap-[8px]">
                 <input
                   type="radio"
+                  value={true}
                   {...register("radio", { required: true })}
                 />
                 <label className="font-sans">Yes</label>
               </div>
               <div className="flex gap-[8px] ">
                 <input
+                  value={false}
                   type="radio"
                   {...register("radio", { required: true })}
                 />
@@ -184,9 +235,12 @@ const ExperiencePage = () => {
             </div>
           </div>
           <div className="flex gap-[554px] mt-[210px]">
-            <button className="w-[93px] h-[53px] text-black rounded-[8px] border-solid border-[1px] border-black text-[20px] font-sans hover:outline-[4px] hover:outline hover:outline-[#C2A5F9]">
+            <Link
+              to="/user"
+              className="flex justify-center items-center w-[93px] h-[53px] text-black rounded-[8px] border-solid border-[1px] border-black text-[20px] font-sans hover:outline-[4px] hover:outline hover:outline-[#C2A5F9]"
+            >
               Back
-            </button>
+            </Link>
             <button
               type="submit"
               className="w-[128px] h-[53px] bg-black  rounded-[8px] text-white text-[20px] font-sans hover:outline-[4px] hover:outline hover:outline-[#C2A5F9]"

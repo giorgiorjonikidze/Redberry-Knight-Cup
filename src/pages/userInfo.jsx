@@ -1,7 +1,7 @@
 import logo from "../assets/images/logo.svg";
 import mainImage from "../assets/images/unsplash_27LH_0jXKYI.png";
 import btnVector from "../assets/images/VectorButton.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
 import ErrorsList from "../components/errorList";
@@ -123,8 +123,8 @@ const UserInfo = () => {
           <input
             {...register("phone", {
               required:
-                "Phone number should be in Georgian format +995#########",
-              pattern: /^(?:\+995|00995|995)[0-9]{9}$/,
+                "Phone number should be in Georgian format 5########",
+              pattern: /^5\d{8}$/,
             })}
             className="w-[775px] h-[46px] mb-[40px] px-[16px] py-[8px] box-border rounded-[4px] border-b-[1px] broder-b-solid border-b-[#95939A] placeholder:text-black active:bg-[#E9ECEF] active:outline-none focus:border-0 focus:bg-[#E9ECEF] focus:outline-none focus-visible:outline-none"
             type="text"
@@ -138,9 +138,9 @@ const UserInfo = () => {
             placeholder="Date of birth *"
           />
           <div className="flex gap-[554px] mt-[101px]">
-            <button className="w-[93px] h-[53px] text-black rounded-[8px] border-solid border-[1px] border-black text-[20px] font-sans hover:outline-[4px] hover:outline hover:outline-[#C2A5F9]">
+            <Link to="/" className="flex justify-center items-center w-[93px] h-[53px] text-black rounded-[8px] border-solid border-[1px] border-black text-[20px] font-sans hover:outline-[4px] hover:outline hover:outline-[#C2A5F9]">
               Back
-            </button>
+            </Link>
             <button
               type="submit"
               className="w-[128px] h-[53px] bg-black  rounded-[8px] text-white text-[20px] font-sans hover:outline-[4px] hover:outline hover:outline-[#C2A5F9]"

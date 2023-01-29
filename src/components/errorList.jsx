@@ -6,10 +6,8 @@ import ErrorCard from "./errorCard";
 const ErrorsList = ({ PropsErrors, counter }) => {
   const [errorsArray, setErrorsArray] = useState([]);
   const [errors, setErrors] = useState(PropsErrors);
-  console.log("propsErrors", PropsErrors);
 
   useEffect(() => {
-    console.log("useEfefect in action");
     const filteredObj = Object.fromEntries(
       Object.entries(errors).filter(([key, value]) => {
         if (typeof value === "object" && !Array.isArray(value)) {
