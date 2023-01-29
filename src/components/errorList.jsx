@@ -3,10 +3,13 @@ import { useEffect } from "react";
 
 import ErrorCard from "./errorCard";
 
-const ErrorsList = ({ errors }) => {
+const ErrorsList = ({ PropsErrors, counter }) => {
   const [errorsArray, setErrorsArray] = useState([]);
+  const [errors, setErrors] = useState(PropsErrors);
+  console.log("propsErrors", PropsErrors);
 
   useEffect(() => {
+    console.log("useEfefect in action");
     const filteredObj = Object.fromEntries(
       Object.entries(errors).filter(([key, value]) => {
         if (typeof value === "object" && !Array.isArray(value)) {
@@ -15,13 +18,12 @@ const ErrorsList = ({ errors }) => {
         return value !== "";
       })
     );
-    console.log(filteredObj, "erorebi garet");
 
     const mappedObj = Object.entries(filteredObj).map((obj) => {
       return obj[1].message;
     });
     setErrorsArray(mappedObj);
-  }, [errors]);
+  }, [PropsErrors, errors, counter]);
 
   const closeErrorHandler = (item) => {
     const newArray = errorsArray.filter((err) => err !== item);

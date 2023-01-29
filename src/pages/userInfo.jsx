@@ -5,8 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
 import ErrorsList from "../components/errorList";
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const UserInfo = () => {
+  const [counter, setCounter] = useState(0);
+
   const navigate = useNavigate();
   const {
     register,
@@ -22,8 +26,11 @@ const UserInfo = () => {
   };
 
   const onError = () => {
-    console.log("metia", errors);
+    console.log("onError on CLick", errors);
+    setCounter(prevCounter => prevCounter + 1);
   };
+
+  
 
   useFormPersist("userInfo", {
     watch,
@@ -31,12 +38,12 @@ const UserInfo = () => {
     storage: window.localStorage,
   });
 
+  
 
 
   return (
     <div className="flex relative">
-      {Object.keys(errors).length !== 0 && <ErrorsList errors={errors} />}
-      {/* <ErrorsList  /> */}
+      {Object.keys(errors).length !== 0 && <ErrorsList PropsErrors={errors} counter={counter}  />  }
 
       <section className="inline-block relative">
         <div className="h-[84px] bg-[#7025FB]  w-[923px]">
