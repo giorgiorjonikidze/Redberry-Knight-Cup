@@ -5,8 +5,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
 import ErrorsList from "../components/errorList";
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect } from "react";
+import { useState } from "react";
 
 const UserInfo = () => {
   const [counter, setCounter] = useState(0);
@@ -27,10 +27,8 @@ const UserInfo = () => {
 
   const onError = () => {
     console.log("onError on CLick", errors);
-    setCounter(prevCounter => prevCounter + 1);
+    setCounter((prevCounter) => prevCounter + 1);
   };
-
-  
 
   useFormPersist("userInfo", {
     watch,
@@ -38,12 +36,11 @@ const UserInfo = () => {
     storage: window.localStorage,
   });
 
-  
-
-
   return (
     <div className="flex relative">
-      {Object.keys(errors).length !== 0 && <ErrorsList PropsErrors={errors} counter={counter}  />  }
+      {Object.keys(errors).length !== 0 && (
+        <ErrorsList PropsErrors={errors} counter={counter} />
+      )}
 
       <section className="inline-block relative">
         <div className="h-[84px] bg-[#7025FB]  w-[923px]">
@@ -65,11 +62,11 @@ const UserInfo = () => {
           </p>
         </div>
       </section>
-      <section className="border-box pl-[48px]">
+      <section className="border-box pl-[48px] w-[960px]">
         <p className="font-bold font-sans my-[30px] tracking-[1px]">
           Start Creating Your Account
         </p>
-        <div className="bg-[#B9B4C3] h-[1px] w-screen"></div>
+        <div className="bg-[#B9B4C3] h-[1px] "></div>
 
         {/* 1--2  */}
         <div className="mt-[60px]">
@@ -103,7 +100,13 @@ const UserInfo = () => {
         >
           {/* name///////////////////////////////////////////////////////////////////////  */}
           <input
-            {...register("name", { required: "Please enter valid name" })}
+            {...register("name", {
+              required: "Please enter valid name",
+              pattern: {
+                valueL: /^.+$/,
+                message: "Please enter valid name",
+              },
+            })}
             className="w-[775px] h-[46px] mb-[40px] px-[16px] py-[8px] box-border rounded-[4px] border-b-[1px] broder-b-solid border-b-[#95939A] placeholder:text-black active:bg-[#E9ECEF] active:outline-none focus:border-0 focus:bg-[#E9ECEF] focus:outline-none focus-visible:outline-none"
             type="text"
             placeholder="Name *"
@@ -111,9 +114,12 @@ const UserInfo = () => {
           {/* emai/////////////////////////////////////////////////////////////////////////////  */}
           <input
             {...register("email", {
-              required:
-                "Please enter email, which should be in '@redberry.ge' format",
-              pattern: /^[a-zA-Z0-9._-]+@redberry.ge$/,
+              required: "Please enter valid email",
+              pattern: {
+                value: /^[a-zA-Z0-9._-]+@redberry.ge$/,
+                message:
+                  "Please enter email, which should be in '@redberry.ge' format",
+              },
             })}
             className="w-[775px] h-[46px] mb-[40px] px-[16px] py-[8px] box-border rounded-[4px] border-b-[1px] broder-b-solid border-b-[#95939A] placeholder:text-black active:bg-[#E9ECEF] active:outline-none focus:border-0 focus:bg-[#E9ECEF] focus:outline-none focus-visible:outline-none"
             type="text"
@@ -122,9 +128,11 @@ const UserInfo = () => {
           {/* phone///////////////////////////////////////////////////////////////////////////////  */}
           <input
             {...register("phone", {
-              required:
-                "Phone number should be in Georgian format 5########",
-              pattern: /^5\d{8}$/,
+              required: "Please enter phone number",
+              pattern: {
+                value: /^5\d{8}$/,
+                message: "Phone number should be in Georgian format 5########",
+              },
             })}
             className="w-[775px] h-[46px] mb-[40px] px-[16px] py-[8px] box-border rounded-[4px] border-b-[1px] broder-b-solid border-b-[#95939A] placeholder:text-black active:bg-[#E9ECEF] active:outline-none focus:border-0 focus:bg-[#E9ECEF] focus:outline-none focus-visible:outline-none"
             type="text"
@@ -132,13 +140,19 @@ const UserInfo = () => {
           />
           {/* date//////////////////////////////////////////////////////////////////////////////  */}
           <input
-            {...register("date", { required: "Please enter valid date" })}
+            {...register("date", {
+              required: "Please enter  date",
+              pattern: { value: /^.+$/, message: "Please enter valid data" },
+            })}
             className="w-[775px] h-[46px] mb-[40px] px-[16px] py-[8px] box-border rounded-[4px] border-b-[1px] broder-b-solid border-b-[#95939A] placeholder:text-black active:bg-[#E9ECEF] active:outline-none focus:border-0 focus:bg-[#E9ECEF] focus:outline-none focus-visible:outline-none"
             type="date"
             placeholder="Date of birth *"
           />
           <div className="flex gap-[554px] mt-[101px]">
-            <Link to="/" className="flex justify-center items-center w-[93px] h-[53px] text-black rounded-[8px] border-solid border-[1px] border-black text-[20px] font-sans hover:outline-[4px] hover:outline hover:outline-[#C2A5F9]">
+            <Link
+              to="/"
+              className="flex justify-center items-center w-[93px] h-[53px] text-black rounded-[8px] border-solid border-[1px] border-black text-[20px] font-sans hover:outline-[4px] hover:outline hover:outline-[#C2A5F9]"
+            >
               Back
             </Link>
             <button

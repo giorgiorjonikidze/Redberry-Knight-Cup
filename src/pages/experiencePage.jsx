@@ -107,9 +107,9 @@ const ExperiencePage = () => {
           date_of_birth: String(userData.data),
         })
         .then((response) => {
-          console.log(response.status);
+          console.log(response);
           if(response.status === 201){
-            NavigationPreloadManager("/success")
+            navigate("/success")
             localStorage.clear();
           }
 
