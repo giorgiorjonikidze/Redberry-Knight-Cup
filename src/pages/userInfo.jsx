@@ -3,6 +3,7 @@ import mainImage from "../assets/images/unsplash_27LH_0jXKYI.png";
 import btnVector from "../assets/images/VectorButton.svg";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import useFormPersist from "react-hook-form-persist";
 import ErrorsList from "../components/errorList";
 
 const UserInfo = () => {
@@ -10,6 +11,8 @@ const UserInfo = () => {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -21,6 +24,14 @@ const UserInfo = () => {
   const onError = () => {
     console.log("metia", errors);
   };
+
+  useFormPersist("userInfo", {
+    watch,
+    setValue,
+    storage: window.localStorage,
+  });
+
+
 
   return (
     <div className="flex relative">
